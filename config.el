@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Franz Srambical"
+      user-mail-address "franz.srambical@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -65,21 +65,10 @@
   (evil-snipe-mode -1))
 
 ; Modified delay in showing suggestions. (company)
-(setq company-idle-delay 0.1)
+(setq company-idle-delay 0.0)
 
 ; set new ace-window key
 (global-set-key (kbd "C-;") 'ace-window)
-
-; disable evil in info-mode
-; edited in /.emacs.d/modules/editor/evil/init.el
-
-; org-mode
-;(define-key global-map "\C-ca" 'org-agenda)
-;(setq org-log-done t)
-;(setq org-agenda-files '("~/Documents/gtd/todo.org"
-                        ;"~/Documents/gtd/gtd.org"
-                        ;"~/Documents/gtd/tickler.org"))
-;(global-set-key (kbd "C-c c") 'org-capture)
 
 (after! org
  (setq org-capture-templates
@@ -124,7 +113,8 @@
         ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?
         %i
         %a" :heading "Changelog" :prepend t)))
- (plist-put org-format-latex-options :scale 1.0)
+ (plist-put org-format-latex-options :scale 2)
+ (setq org-startup-with-latex-preview t)
  )
 
 
@@ -157,120 +147,12 @@
 
 (add-hook 'asm-mode-hook #'my-asm-mode-hook)
 
-; controlling macOS music from inside emacs
-;(load-file "~/.emacs.d/modules/tools/musica/musica.el")
-
-;(global-set-key (kbd "C-c m SPC") #'musica-play-pause)
-;(global-set-key (kbd "C-c m i") #'musica-info)
-;(global-set-key (kbd "C-c m n") #'musica-play-next)
-;(global-set-key (kbd "C-c m p") #'musica-play-previous)
-;(global-set-key (kbd "C-c m r") #'musica-play-next-random)
-;(global-set-key (kbd "C-c m s") #'musica-search)
-
-; bind gud-run
-;(global-set-key(kbd "C-x C-a r") #'gud-run)
-
-; tls workaround for eww
-;(setq network-security-level 'low)
-
-;; ; w3m
-;; (setq w3m-search-default-engine "duckduckgo")
-;; (with-eval-after-load 'w3m
-;;  (evil-define-key 'normal w3m-mode-map
-;;   "s" 'w3m-search
-;;   "S" 'w3m-search-new-session
-;;   "d" 'evil-scroll-down
-;;   "u" 'evil-scroll-up
-;;   "x" 'w3m-delete-buffer
-;;   "J" 'w3m-previous-buffer
-;;   "K" 'w3m-next-buffer
-;;   "E" 'w3m-view-url-with-browse-url))
-
-
-;; ; w3m link-hinting
-;; (defvar w3m-isearch-links-do-wrap nil
-;; "Used internally for fast search wrapping.")
-
-;; (defun w3m-isearch-links (&optional regexp)
-;; (interactive "P")
-;; (let ((isearch-wrap-function
-;; #'(lambda ()
-;;         (setq w3m-isearch-links-do-wrap nil)
-;;         (if isearch-forward
-;; (goto-char (window-start))
-;; (goto-char (window-end)))))
-;; (isearch-search-fun-function
-;; #'(lambda () 'w3m-isearch-links-search-fun))
-;; post-command-hook   ;inhibit link echoing
-;; do-follow-link
-;; (isearch-mode-end-hook
-;; (list  #'(lambda nil
-;;         (when (and (not isearch-mode-end-hook-quit)
-;;         (w3m-anchor))
-;; (setq do-follow-link t))))))
-;; (setq w3m-isearch-links-do-wrap t)
-;; (isearch-mode t
-;; regexp
-;; ;; fast wrap
-;; #'(lambda nil
-;; (if isearch-success
-;;         (setq w3m-isearch-links-do-wrap t)
-;; (when w3m-isearch-links-do-wrap
-;;         (setq w3m-isearch-links-do-wrap nil)
-;;         (setq isearch-forward
-;;         (not isearch-forward))
-;;         (isearch-repeat isearch-forward))))
-;; t)
-;; (when do-follow-link
-;; (w3m-view-this-url))))
-
-;; (defun w3m-isearch-links-search-fun (string &optional bound no-error)
-;; (let* (isearch-search-fun-function
-;; (search-fun  (isearch-search-fun))
-;; error
-;; (bound  (if isearch-forward
-;;         (max (or bound 0)
-;;         (window-end))
-;;         (min (or bound (window-start))
-;; (window-start)))))
-;; (condition-case err
-;; (while (and (apply search-fun (list string bound))
-;;         (not (w3m-anchor (point)))))
-;; (error (setq error err)))
-;; (if error
-;; (if (not no-error)
-;; (signal (car error) (cadr error)))
-;; (point))))
-
-;; (require 'w3m)
-;; (evil-define-key 'normal w3m-mode-map "f" 'w3m-isearch-links)
-
-;; ; signal-msg
-;; (add-to-list 'load-path (expand-file-name "~/signal-msg"))
-;; (require 'signal-msg)
-;; (setq signal-msg-username "+4369917182739")
-
-;; ; pdf-tools custom keybindings
-;; (evil-define-key 'normal pdf-view-mode-map
-;;   "d" 'pdf-view-scroll-up-or-next-page
-;;   "u" 'pdf-view-scroll-down-or-previous-page)
-
-;; (setq-hook! 'pdf-view-mode-hook
-;;   pdf-view-midnight-colors '( "#ffffff" . "#000000"))
-
-;; ; exec-path-from-shell
-;; (when (memq window-system '(mac ns x))
-;;   (exec-path-from-shell-initialize))
-
-;; ; w3m hack for not hanging?
-;; (add-to-list 'w3m-command-environment '("GC_NPROCS" ."1"))
-
 ; change font only for info mode and emacs-w3m
  ;; Use variable width font faces in current buffer
 (defun my-buffer-face-mode-variable ()
   "Set font to a variable width (proportional) fonts in current buffer"
   (interactive)
-  (setq buffer-face-mode-face '(:family "Verdana" :height 150))
+  (setq buffer-face-mode-face '(:family "Verdana" :height 100))
   (buffer-face-mode))
 
 ;; Use monospaced font faces in current buffer
@@ -284,31 +166,13 @@
 ;(add-hook 'w3m-mode-hook 'my-buffer-face-mode-variable)
 (add-hook 'Info-mode-hook 'my-buffer-face-mode-variable)
 
-; open links in eww per default
-; (setq browse-url-browser-function 'eww-browse-url)
-
-
 ; eww
 (with-eval-after-load 'eww
  (evil-define-key 'normal eww-mode-map
   "d" 'evil-scroll-down
   "u" 'evil-scroll-up))
 
-; xwidget
-;(with-eval-after-load 'xwidget-webkit
-  ;(define-key xwidget-webkit-mode-map
-    ;(kbd "f") 'xwwp-follow-link))
-    ;"u" 'xwidget-webkti-scroll-down
-    ;"f" 'xwwp-follow-link))
-
-; emacs eww as browse-url-browser
-; (setq browse-url-browser-function 'eww)
-
-;; (defun xdg-open (filename)
-;;   (interactive "fFilename: ")
-;;   (let ((process-connection-type))
-;;     (start-process "" nil "xdg-open" (expand-file-name filename))))
-
+;; find file
 (defun xdg-open (file)
   (interactive "f")
   (let ((process-connection-type nil))
@@ -332,3 +196,8 @@
 (after! ccls
   (setq ccls-initialization-options '(:index (:comments 2) :completion (:detailedLabel t)))
   (set-lsp-priority! 'ccls 2)) ; optional as ccls is the default in Doom
+
+;; math-symbol
+(add-to-list 'company-backends 'company-math-symbols-latex)
+
+(add-hook 'org-mode-hook 'org-fragtog-mode)

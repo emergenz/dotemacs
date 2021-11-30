@@ -57,4 +57,4 @@
 (package! gitignore-mode
 	  	  :recipe (:host github :repo "magit/git-modes"
 				 			 :files ("gitignore-mode.el")))
-
+(package! org-fragtog)
